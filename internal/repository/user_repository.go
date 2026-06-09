@@ -33,7 +33,7 @@ func (r *postgresUserRepository) Create(ctx context.Context, user *domain.User) 
 		VALUES ($1, $2, $3)
 		RETURNING id, created_at, updated_at`
 
-	err := r.db.	(ctx, query, user.Username, user.Email, user.PasswordHash).
+	err := r.db.QueryRowxContext(ctx, query, user.Username, user.Email, user.PasswordHash).
 		Scan(&user.ID, &user.CreatedAt, &user.UpdatedAt)
 	return err
 }
